@@ -6,6 +6,7 @@
 
 .cell {
     width: 100%;
+    border-radius: 8px;
 }
 
 .cell img {
@@ -14,4 +15,20 @@
     display: block;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: black;
+}
+
+.hidden {
+    transition: 0.3s;
+}
+
+.clicked {
+    transition: 0.3s;
+    background-color: transparent  !important;
+}
+
+.matched {
+    transition: 0.5s;
+    opacity: 0;
+    background-color: white  !important;
 }

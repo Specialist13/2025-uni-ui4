@@ -3,17 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memory game</title>
+    <title>Atminties lavinimo žaidimas</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- Įgyvendinami Nielsen euristikos principai: -->
+    <!-- 1. Atitikimas realiam pasauliui ir jo atributams -->
+    <!-- 2. Valdymas ir veiksmų laisvė -->
+    <!-- 3. Lankstumas ir efektyvumas -->
+    <!-- 4. Pagalba ir dokumentacija -->
 </head>
 <body>
     <div class="game-container">
-        <h1>Welcome to the Memory Game!</h1>
-        <p>Click the button below to start playing.</p>
-        <input type="number" id="size-input" placeholder="Enter cell number (>=20 and even)" min="20">
-        <button id="start-button">Start Game</button>
+        <h1>Atminties lavinimo žaidimas</h1>
+        <p>Spustelėkite mygtuką žemiau, kad pradėtumėte žaisti.</p>
+        <input type="number" id="size-input" placeholder="Įveskite langelių skaičių (>=20 ir lyginis)" min="20">
+        <button id="start-button">Pradėti žaidimą</button>
         <div id="game-board">
-            <!-- Game board will be dynamically generated here -->
+            <!-- Žaidimo lenta bus sugeneruota čia -->
         </div>
     </div>
     <script src="script.js" defer></script>

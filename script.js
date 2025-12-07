@@ -15,10 +15,16 @@ function createBoard(size) {
         return;
     }
     pictureIdList.length = 0;
-    for (let i=1;i<=size/2;i++){
-        const j=Math.floor(Math.random()*15)+1;
-        pictureIdList.push(j);
-        pictureIdList.push(j);
+    for (let i=1;i<=Math.min(size/2, 15);i++){
+        pictureIdList.push(i);
+        pictureIdList.push(i);
+    }
+    if (size/2>15) {
+        for (let i=16;i<=size/2;i++){
+            const j=Math.floor(Math.random()*15)+1;
+            pictureIdList.push(j);
+            pictureIdList.push(j);
+        }
     }
     shuffle(pictureIdList);
 
@@ -42,10 +48,49 @@ startButton.addEventListener('click', () => {
     createBoard(size);
 });
 
-// Simple event delegation to read the image ID on click
+let firstCard = null;
+let matched = 0;
+let isLocked = false;
+
 gameBoard.addEventListener('click', (e) => {
+    if (isLocked) return; // ignore clicks while animating
     const img = e.target.closest('img');
     if (!img) return;
-    const pictureId = img.dataset.pictureId;   // e.g., "7"
+    const pictureId = img.dataset.pictureId;
     console.log('Clicked picture id:', pictureId);
+    if (img.classList.contains('matched') || img === firstCard) {
+        return;
+    }
+    img.classList.add('clicked');
+    if (!firstCard) {
+        firstCard = img;
+        return;
+    }
+    if (firstCard.dataset.pictureId === pictureId && firstCard !== img) {
+        matched += 2;
+        isLocked = true;
+        setTimeout(() => {
+            if (firstCard) {
+                firstCard.classList.remove('clicked');
+                firstCard.classList.add('matched');
+            }
+            img.classList.remove('clicked');
+            img.classList.add('matched');
+            firstCard = null;
+            isLocked = false;
+        }, 300);
+    } else {
+        isLocked = true;
+        setTimeout(() => {
+            if (firstCard) {
+                firstCard.classList.remove('clicked');
+                firstCard.classList.add('hidden');
+            }
+            img.classList.remove('clicked');
+            img.classList.add('hidden');
+            firstCard = null;
+            isLocked = false;
+        }, 500);
+    }
 });
+
