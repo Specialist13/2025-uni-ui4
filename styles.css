@@ -1,12 +1,66 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-repeat: no-repeat;
+    height: 100%;
+}
+
 #game-board {
+    margin: 20px 50px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 10px;
+}
+
+#hud {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 50px;
+    display: none;
+}
+
+#timer {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#controls button {
+    margin-left: 10px;
+    padding: 8px 14px;
+}
+
+@media screen and (max-width: 1200px) {
+    #game-board {
+        grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    }
+}
+
+@media screen and (max-width: 900px) {
+    #game-board {
+        grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #game-board {
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+        gap: 8px;
+        margin: 10px 15px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #game-board {
+        grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    }
 }
 
 .cell {
     width: 100%;
-    border-radius: 8px;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .cell img {
@@ -31,4 +85,13 @@
     transition: 0.5s;
     opacity: 0;
     background-color: white  !important;
+}
+
+input {
+    width: 300px;
+}
+
+#info {
+    margin-bottom: 20px;
+    text-align: center;
 }

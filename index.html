@@ -13,10 +13,30 @@
 </head>
 <body>
     <div class="game-container">
-        <h1>Atminties lavinimo žaidimas</h1>
-        <p>Spustelėkite mygtuką žemiau, kad pradėtumėte žaisti.</p>
-        <input type="number" id="size-input" placeholder="Įveskite langelių skaičių (>=20 ir lyginis)" min="20">
-        <button id="start-button">Pradėti žaidimą</button>
+        <div id="info">
+            <div id="start">
+                <h1>Atminties lavinimo žaidimas</h1>
+                <input type="text" id="name-input" placeholder="Įveskite savo vardą"><br><br>
+                <input type="number" id="size-input" placeholder="Įveskite langelių skaičių (tarp 20 ir 100, lyginis)" min="20" max="100"><br><br>
+                <button id="start-button">Pradėti žaidimą</button>
+            </div>
+            <div id="leaderboard">
+                <h2>Lyderių sąrašas</h2>
+                <ul id="leaderboard-list">
+                    <!-- Lyderių sąrašas bus sugeneruotas čia -->
+                </ul>
+            </div>
+            <div id="help">
+
+            </div>
+        </div>
+        <div id="hud">
+            <div id="timer">00:00</div>
+            <div id="controls">
+                <button id="pause-button" disabled>Pauzė</button>
+                <button id="stop-button" disabled>Stabdyti</button>
+            </div>
+        </div>
         <div id="game-board">
             <!-- Žaidimo lenta bus sugeneruota čia -->
         </div>
