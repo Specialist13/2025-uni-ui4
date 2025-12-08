@@ -27,7 +27,9 @@
                 </ul>
             </div>
             <div id="help">
-
+                <button id="help-button" aria-label="Pagalba" title="Pagalba">
+                    <img src="public/help.png" alt="Pagalba" class="control-icon">
+                </button>
             </div>
         </div>
         <div id="hud">
@@ -39,6 +41,25 @@
         </div>
         <div id="game-board">
             <!-- Žaidimo lenta bus sugeneruota čia -->
+        </div>
+    </div>
+    <!-- Pagalbos langas (modalas) -->
+    <div id="help-modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="help-modal-title" aria-modal="true">
+        <div class="modal-backdrop" data-close="true"></div>
+        <div class="modal-content" role="document">
+            <button class="modal-close" id="help-close" aria-label="Uždaryti">×</button>
+            <h2 id="help-modal-title">Kaip žaisti</h2>
+            <div class="modal-body">
+                <p><strong>Esmė:</strong> tai atminties lavinimo žaidimas. Žaidimo lentoje yra poromis pasikartojančios kortelės su paveikslėliais. Tikslas – kuo greičiau rasti ir atversti visas poras.</p>
+                <p><strong>Pradžia:</strong> įveskite savo vardą ir pasirinkite langelių skaičių (20–100, lyginis), tada spauskite „Pradėti žaidimą“.</p>
+                <p><strong>Valdymas:</strong></p>
+                <ul>
+                    <li><strong>Pele:</strong> spustelėkite korteles, kad atverstume poras.</li>
+                    <li><strong>Klaviatūra:</strong> Enter – pradėti, Space – pauzė/tęsti, Escape – stabdyti žaidimą.</li>
+                    <li><strong>Mygtukai viršuje:</strong> pauzė/tęsti ir stabdymas.</li>
+                </ul>
+                <p><strong>Patarimai:</strong> stebėkite atverstas korteles ir įsiminkite jų vietas. Didesnis langelių skaičius – sunkesnis lygis.</p>
+            </div>
         </div>
     </div>
     <script src="script.js" defer></script>

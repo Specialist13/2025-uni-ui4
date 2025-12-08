@@ -46,7 +46,6 @@ function createBoard(size) {
     }
 
     document.getElementById('info').style.display = 'none';
-    // Enable controls and start timer
     pauseButton.disabled = false;
     stopButton.disabled = false;
     setPauseButtonState(false);
@@ -118,7 +117,6 @@ startButton.addEventListener('click', () => {
 });
 
 pauseButton.addEventListener('click', () => {
-    // Toggle pause: when paused, hide board and prevent interaction
     isPaused = !isPaused;
     if (isPaused) {
         gameBoard.style.display = 'none';
@@ -132,7 +130,6 @@ pauseButton.addEventListener('click', () => {
 });
 
 stopButton.addEventListener('click', () => {
-    // Stop game: clear board, stop timer, show start menu
     stopTimer();
     timerEl.textContent = '00:00';
     pauseButton.disabled = true;
@@ -154,28 +151,21 @@ let firstCard = null;
 let matched = 0;
 let isLocked = false;
 function onGameComplete() {
-    // Push to in-memory leaderboard
     leaderboardEntries.push({ name: currentPlayerName, size: currentBoardSize, time: elapsedSeconds });
-    // Update DOM list
     if (leaderboardList) {
         const li = document.createElement('li');
         li.textContent = `${currentPlayerName} — ${currentBoardSize} langelių — ${formatTime(elapsedSeconds)}`;
         leaderboardList.appendChild(li);
     }
-    // Return to main menu
     if (startMenu) {
-        // Clear the game board UI
         gameBoard.innerHTML = '';
-        // Optionally reset state
         firstCard = null;
         matched = 0;
         isLocked = false;
-        // Focus name input for convenience
         nameInput && nameInput.focus();
     }
     document.getElementById('info').style.display = 'block';
     document.getElementById('hud').style.display = 'none';
-    // Disable controls and stop timer
     stopTimer();
     pauseButton.disabled = true;
     stopButton.disabled = true;
@@ -209,7 +199,7 @@ gameBoard.addEventListener('click', (e) => {
             img.classList.add('matched');
             firstCard = null;
             isLocked = false;
-            // If all images are matched, finalize
+
             const totalCards = gameBoard.querySelectorAll('img').length;
             if (matched >= totalCards && totalCards > 0) {
                 onGameComplete();
@@ -235,7 +225,6 @@ function isVisible(el) {
 }
 
 document.addEventListener('keydown', (e) => {
-    // Keyboard shortcuts: Enter to start, Space to pause/play, Escape to stop
     if (e.code === 'Enter') {
         if (infoSection && isVisible(infoSection) && !startButton.disabled) {
             e.preventDefault();
@@ -247,10 +236,50 @@ document.addEventListener('keydown', (e) => {
             pauseButton.click();
         }
     } else if (e.code === 'Escape') {
+        const modal = document.getElementById('help-modal');
+        if (modal && modal.classList.contains('open')) {
+            e.preventDefault();
+            closeHelpModal();
+            return;
+        }
         if (stopButton && !stopButton.disabled) {
             e.preventDefault();
             stopButton.click();
         }
     }
 });
+
+// Pagalbos mygtukas ir modalo logika
+(function initHelpModal(){
+    const helpBtn = document.getElementById('help-button');
+    const modal = document.getElementById('help-modal');
+    const closeBtn = document.getElementById('help-close');
+    let lastFocused = null;
+
+    if (!helpBtn || !modal || !closeBtn) return;
+
+    window.closeHelpModal = function closeHelpModal(){
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden','true');
+        if (lastFocused && typeof lastFocused.focus === 'function') {
+            lastFocused.focus();
+        }
+    }
+
+    function openHelpModal(){
+        lastFocused = document.activeElement;
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden','false');
+        closeBtn.focus();
+    }
+
+    helpBtn.addEventListener('click', openHelpModal);
+    closeBtn.addEventListener('click', () => window.closeHelpModal());
+    modal.addEventListener('click', (e) => {
+        const target = e.target;
+        if (target && target.dataset && target.dataset.close === 'true') {
+            window.closeHelpModal();
+        }
+    });
+})();
 

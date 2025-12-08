@@ -1,9 +1,31 @@
+:root {
+    --bg: #f6f7fb;
+    --text: #1e2330;
+    --muted: #6b7280;
+    --surface: #ffffff;
+    --surface-2: #f0f2f7;
+    --border: #e5e7eb;
+    --primary: #3b82f6;
+    --primary-600: #2563eb;
+    --shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
 html, body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
+    color: var(--text);
+    background: radial-gradient(1200px 600px at 10% -10%, #eaf1ff, transparent),
+                radial-gradient(1000px 500px at 100% 0%, #f8f9ff, transparent),
+                var(--bg);
     background-repeat: no-repeat;
     height: 100%;
+}
+
+.game-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 20px 32px;
 }
 
 #game-board {
@@ -17,19 +39,39 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 50px;
+    padding: 12px 20px;
+    margin: 0 50px 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
     display: none;
 }
 
 #timer {
     font-size: 20px;
     font-weight: bold;
+    letter-spacing: 0.5px;
 }
 
 #controls button {
     margin-left: 10px;
-    padding: 8px 14px;
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0;
+    cursor: pointer;
+    transition: background .2s ease, border-color .2s ease, transform .05s ease;
 }
+
+#controls button:hover:not(:disabled) { background: #eaeef7; }
+#controls button:active:not(:disabled) { transform: translateY(1px); }
+#controls button:disabled { opacity: 0.6; cursor: not-allowed; }
 
 .control-icon {
     width: 22px;
@@ -56,6 +98,7 @@ html, body {
         gap: 8px;
         margin: 10px 15px;
     }
+    #hud { margin: 0 15px 10px; }
 }
 
 @media screen and (max-width: 480px) {
@@ -95,10 +138,132 @@ html, body {
 }
 
 input {
-    width: 300px;
+    width: min(320px, 84vw);
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: var(--shadow);
+}
+input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
 }
 
 #info {
     margin-bottom: 20px;
     text-align: center;
+}
+
+#start h1, #info h1 { margin-top: 0; }
+
+#start {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 22px 24px;
+    margin: 0 50px 16px;
+    box-shadow: var(--shadow);
+}
+
+#leaderboard {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 12px 18px 16px;
+    margin: 16px 50px 0;
+    box-shadow: var(--shadow);
+}
+
+#leaderboard-list {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0;
+}
+
+#leaderboard-list li {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    color: var(--text);
+}
+
+#start-button {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: background .2s ease, transform .05s ease;
+}
+#start-button:hover { background: var(--primary-600); }
+#start-button:active { transform: translateY(1px); }
+#start-button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* Help button */
+#help {
+    margin-top: 10px;
+    text-align: right;
+    margin-right: 50px;
+}
+
+#help-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+}
+
+#help-button:focus {
+    outline: 2px solid #4a90e2;
+    border-radius: 6px;
+}
+
+/* Modal (help dialog) */
+.modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    z-index: 1000;
+}
+
+.modal.open { display: block; }
+
+.modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    position: relative;
+    max-width: 640px;
+    margin: 8vh auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    padding: 20px 24px 24px;
+}
+
+.modal-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.modal-body ul {
+    margin: 8px 0 0 18px;
 }
