@@ -40,6 +40,7 @@ function createBoard(size) {
         cell.classList.add('cell');
         const image = document.createElement('img');
         image.src = 'public/' + pictureIdList[i] + '.png';
+        image.draggable = false;
         image.dataset.pictureId = String(pictureIdList[i]);
         cell.appendChild(image);
         gameBoard.appendChild(cell);
@@ -114,6 +115,14 @@ startButton.addEventListener('click', () => {
     currentPlayerName = playerName;
     currentBoardSize = size;
     createBoard(size);
+});
+
+// Disable dragging on images globally
+document.addEventListener('dragstart', (e) => {
+    const img = e.target.closest && e.target.closest('img');
+    if (img) {
+        e.preventDefault();
+    }
 });
 
 pauseButton.addEventListener('click', () => {
