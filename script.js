@@ -3,6 +3,8 @@ const gameBoard = document.getElementById('game-board');
 const timerEl = document.getElementById('timer');
 const pauseButton = document.getElementById('pause-button');
 const stopButton = document.getElementById('stop-button');
+const infoSection = document.getElementById('info');
+const hud = document.getElementById('hud');
 
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -47,6 +49,7 @@ function createBoard(size) {
     // Enable controls and start timer
     pauseButton.disabled = false;
     stopButton.disabled = false;
+    setPauseButtonState(false);
     document.getElementById('hud').style.display = 'flex';
     startTimer();
 }
@@ -65,6 +68,17 @@ let currentBoardSize = 0;
 let timerInterval = null;
 let elapsedSeconds = 0;
 let isPaused = false;
+
+function setPauseButtonState(paused) {
+    const iconEl = pauseButton ? pauseButton.querySelector('img') : null;
+    if (iconEl) {
+        iconEl.src = paused ? 'public/play.png' : 'public/pause.png';
+        iconEl.alt = paused ? 'Tęsti' : 'Pauzė';
+    }
+    if (pauseButton) {
+        pauseButton.setAttribute('aria-label', paused ? 'Tęsti' : 'Pauzė');
+    }
+}
 
 function formatTime(sec) {
     const m = Math.floor(sec / 60);
@@ -108,11 +122,11 @@ pauseButton.addEventListener('click', () => {
     isPaused = !isPaused;
     if (isPaused) {
         gameBoard.style.display = 'none';
-        pauseButton.textContent = 'Tęsti';
+        setPauseButtonState(true);
         isLocked = true;
     } else {
         gameBoard.style.display = '';
-        pauseButton.textContent = 'Pauzė';
+        setPauseButtonState(false);
         isLocked = false;
     }
 });
@@ -123,7 +137,7 @@ stopButton.addEventListener('click', () => {
     timerEl.textContent = '00:00';
     pauseButton.disabled = true;
     stopButton.disabled = true;
-    pauseButton.textContent = 'Pauzė';
+    setPauseButtonState(false);
     isPaused = false;
     firstCard = null;
     matched = 0;
@@ -165,7 +179,7 @@ function onGameComplete() {
     stopTimer();
     pauseButton.disabled = true;
     stopButton.disabled = true;
-    pauseButton.textContent = 'Pauzė';
+    setPauseButtonState(false);
     isPaused = false;
 }
 
@@ -213,6 +227,30 @@ gameBoard.addEventListener('click', (e) => {
             firstCard = null;
             isLocked = false;
         }, 500);
+    }
+});
+
+function isVisible(el) {
+    return el && getComputedStyle(el).display !== 'none';
+}
+
+document.addEventListener('keydown', (e) => {
+    // Keyboard shortcuts: Enter to start, Space to pause/play, Escape to stop
+    if (e.code === 'Enter') {
+        if (infoSection && isVisible(infoSection) && !startButton.disabled) {
+            e.preventDefault();
+            startButton.click();
+        }
+    } else if (e.code === 'Space' || e.code === 'Spacebar') {
+        if (pauseButton && !pauseButton.disabled) {
+            e.preventDefault();
+            pauseButton.click();
+        }
+    } else if (e.code === 'Escape') {
+        if (stopButton && !stopButton.disabled) {
+            e.preventDefault();
+            stopButton.click();
+        }
     }
 });
 
